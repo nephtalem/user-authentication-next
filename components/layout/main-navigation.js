@@ -1,14 +1,14 @@
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/client";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import classes from "./main-navigation.module.css";
 
 function MainNavigation() {
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
-  console.log(session);
+  console.log(session, status);
 
   function logoutHandler() {
     router.replace("/auth");
@@ -22,7 +22,7 @@ function MainNavigation() {
       </Link>
       <nav>
         <ul>
-          {!session && !loading && (
+          {!session && (
             <li>
               <Link href="/auth">Login</Link>
             </li>

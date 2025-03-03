@@ -70,3 +70,21 @@
   background-color: transparent;
   color: #ae82cc;
 }
+
+.google {
+  background-color: #db4437;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.google:hover {
+  background-color: #c1351d;
+}

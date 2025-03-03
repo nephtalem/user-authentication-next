@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
-import { signIn } from "next-auth/client";
+// import { signIn } from "next-auth/client";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import classes from "./auth-form.module.css";
@@ -39,8 +40,6 @@ function AuthForm() {
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    // optional: Add validation
-
     if (isLogin) {
       const result = await signIn("credentials", {
         redirect: false,
@@ -49,7 +48,6 @@ function AuthForm() {
       });
 
       if (!result.error) {
-        // set some auth state
         router.replace("/profile");
       }
     } else {
@@ -60,6 +58,10 @@ function AuthForm() {
         console.log(error);
       }
     }
+  }
+
+  function googleSignInHandler() {
+    signIn("google");
   }
 
   return (
@@ -88,6 +90,13 @@ function AuthForm() {
           >
             {isLogin ? "Create new account" : "Login with existing account"}
           </button>
+          <button
+            type="button"
+            className={classes.google}
+            onClick={googleSignInHandler}
+          >
+            Sign in with Google
+          </button>
         </div>
       </form>
     </section>
@@ -95,3 +104,5 @@ function AuthForm() {
 }
 
 export default AuthForm;
+
+/* Add this to your auth-form.module.css file */
