@@ -1,7 +1,8 @@
-import { useState } from "react";
-import classes from "./auth-form.module.css";
+import { useState, useRef } from "react";
 import { signIn } from "next-auth/client";
 import { useRouter } from "next/router";
+
+import classes from "./auth-form.module.css";
 
 async function createUser(email, password) {
   const response = await fetch("/api/auth/signup", {
@@ -22,11 +23,10 @@ async function createUser(email, password) {
 }
 
 function AuthForm() {
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+
   const [isLogin, setIsLogin] = useState(true);
-
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
   const router = useRouter();
 
   function switchAuthModeHandler() {
@@ -36,8 +36,8 @@ function AuthForm() {
   async function submitHandler(event) {
     event.preventDefault();
 
-    const enteredEmail = email;
-    const enteredPassword = password;
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
 
     // optional: Add validation
 
@@ -68,13 +68,7 @@ function AuthForm() {
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="email">Your Email</label>
-          <input
-            type="email"
-            id="email"
-            onChange={(e) => setEmail(e.target.value)}
-            name="email"
-            required
-          />
+          <input type="email" id="email" required ref={emailInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor="password">Your Password</label>
@@ -82,12 +76,11 @@ function AuthForm() {
             type="password"
             id="password"
             required
-            onChange={(e) => setPassword(e.target.value)}
-            name="password"
+            ref={passwordInputRef}
           />
         </div>
         <div className={classes.actions}>
-          <button type="submit">{isLogin ? "Login" : "Create Account"}</button>
+          <button>{isLogin ? "Login" : "Create Account"}</button>
           <button
             type="button"
             className={classes.toggle}

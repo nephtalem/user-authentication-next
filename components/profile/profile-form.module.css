@@ -43,3 +43,14 @@
   background-color: #540d83;
   border-color: #540d83;
 }
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: center;
+  background-color: #ffe6e6;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid red;
+}
